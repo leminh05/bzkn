@@ -1,0 +1,155 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0d1a26; /* Nền tối để pháo hoa nổi bật */
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif; /* Thêm font chữ */
+}
+
+.firework-heart-container {
+    position: relative;
+    width: 250px; /* Tăng kích thước container để chứa chữ */
+    height: 250px; /* Tăng kích thước container để chứa chữ */
+    display: flex;
+    flex-direction: column; /* Sắp xếp theo cột */
+    justify-content: center;
+    align-items: center;
+    animation: fadeInPop 2s ease-out forwards;
+}
+
+.heart {
+    position: relative; /* Đổi thành relative để căn chỉnh dễ hơn trong flexbox */
+    width: 100px; /* Kích thước cơ bản của trái tim */
+    height: 90px;
+    background-color: #ff4d4d; /* Màu đỏ của trái tim */
+    transform: rotate(-45deg);
+    box-shadow: 0 0 15px rgba(255, 77, 77, 0.7); /* Hiệu ứng sáng mờ */
+    animation: heartPulse 1.5s infinite alternate ease-in-out; /* Nhịp đập */
+    z-index: 2; /* Đảm bảo trái tim nằm trên các hạt lấp lánh */
+    margin-bottom: 20px; /* Khoảng cách giữa trái tim và chữ */
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: #ff4d4d;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 77, 77, 0.7);
+}
+
+.heart::before {
+    top: -50px;
+    left: 0;
+}
+
+.heart::after {
+    left: 50px;
+    top: 0;
+}
+
+.message {
+    position: relative; /* Để có thể dùng z-index và căn chỉnh */
+    color: #ffd700; /* Màu vàng kim cho chữ */
+    font-size: 2.5em; /* Kích thước chữ lớn hơn */
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6); /* Đổ bóng phát sáng */
+    opacity: 0; /* Ẩn ban đầu */
+    transform: translateY(20px); /* Dịch chuyển nhẹ ban đầu */
+    animation: textAppear 1.5s forwards ease-out; /* Hiệu ứng xuất hiện */
+    animation-delay: 2s; /* Trễ 2 giây sau khi trái tim xuất hiện */
+    z-index: 3; /* Đảm bảo chữ nằm trên trái tim và hạt lấp lánh */
+}
+
+/* Hiệu ứng lấp lánh/pháo hoa */
+.sparkle {
+    position: absolute;
+    background-color: #fff; /* Màu lấp lánh */
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 1;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Thêm bóng nhẹ cho hạt */
+}
+
+/* Kích thước và vị trí ngẫu nhiên cho các hạt lấp lánh */
+.sparkle-1 { width: 4px; height: 4px; animation: sparkleEffect 1.5s infinite 0.1s; }
+.sparkle-2 { width: 6px; height: 6px; animation: sparkleEffect 1.5s infinite 0.3s; }
+.sparkle-3 { width: 3px; height: 3px; animation: sparkleEffect 1.5s infinite 0.5s; }
+.sparkle-4 { width: 5px; height: 5px; animation: sparkleEffect 1.5s infinite 0.7s; }
+.sparkle-5 { width: 4px; height: 4px; animation: sparkleEffect 1.5s infinite 0.9s; }
+.sparkle-6 { width: 7px; height: 7px; animation: sparkleEffect 1.5s infinite 1.1s; }
+
+
+/* --- Keyframes --- */
+
+/* Hiệu ứng xuất hiện tổng thể */
+@keyframes fadeInPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    70% {
+        opacity: 1;
+        transform: scale(1.1); /* Phóng to nhẹ rồi thu lại */
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Hiệu ứng nhịp đập của trái tim */
+@keyframes heartPulse {
+    0% { transform: rotate(-45deg) scale(1); }
+    100% { transform: rotate(-45deg) scale(1.05); }
+}
+
+/* Hiệu ứng hạt lấp lánh */
+@keyframes sparkleEffect {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0);
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(calc(var(--rand-x) * 1px), calc(var(--rand-y) * 1px)) scale(1);
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    }
+    80% {
+        opacity: 1;
+        transform: translate(calc(var(--rand-x) * 2px), calc(var(--rand-y) * 2px)) scale(0.8);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(calc(var(--rand-x) * 3px), calc(var(--rand-y) * 3px)) scale(0);
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
+/* Hiệu ứng xuất hiện của chữ */
+@keyframes textAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Định nghĩa biến CSS để tạo vị trí ngẫu nhiên cho hạt lấp lánh */
+.sparkle-1 { --rand-x: 50; --rand-y: -100; }
+.sparkle-2 { --rand-x: -80; --rand-y: 80; }
+.sparkle-3 { --rand-x: 100; --rand-y: 60; }
+.sparkle-4 { --rand-x: -120; --rand-y: -40; }
+.sparkle-5 { --rand-x: 30; --rand-y: 120; }
+.sparkle-6 { --rand-x: -100; --rand-y: -70; }
+/* Điều chỉnh các giá trị --rand-x, --rand-y để các hạt bay rộng hơn */
