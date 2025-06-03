@@ -21,10 +21,7 @@ canvas {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #FFB6C1; /* LightPink rất hòa với trái tim hồng */
   font-size: 2.5rem; /* Có thể điều chỉnh nếu màn hình lớn */
-  text-shadow: 0 0 10px rgba(255, 182, 193, 0.8),
-               0 0 20px rgba(255, 182, 193, 0.6);
   z-index: 10; /* Luôn nằm trên cùng */
   text-align: center;
   white-space: nowrap;
