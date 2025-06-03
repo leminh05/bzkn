@@ -1,40 +1,101 @@
-html, body {
+/* Reset & base setup */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
   width: 100%;
   height: 100%;
-  background-color: #000;
+  background: #000;
+  font-family: 'Pacifico', cursive;
   overflow: hidden;
-  font-family: "Pacifico", cursive; /* Font “Pacifico” đã import trong HTML */
 }
 
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
-canvas {
-  display: block;
-  width: 100vw;
-  height: 100vh;
+/* Heart Shape */
+.heart {
   position: absolute;
-  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 90px;
+  background: pink;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  animation: beat 1s infinite;
 }
 
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 90px;
+  background: pink;
+  border-radius: 50%;
+}
 
+.heart::before {
+  top: -50px;
+  left: 0;
+}
+
+.heart::after {
+  left: 50px;
+  top: 0;
+}
+
+/* Beating animation */
+@keyframes beat {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(-45deg) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-45deg) scale(1.2);
+  }
+}
+
+/* Overlay text */
 .overlay-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: hsl(351, 88%, 68%); /* LightPink rất hòa với trái tim hồng */
-  font-size: 2.5rem; /* Có thể điều chỉnh nếu màn hình lớn */
-  text-shadow: 0 0 10px rgba(190, 103, 116, 0.8),
-               0 0 20px rgba(190, 103, 116, 0.8);
-  z-index: 10; /* Luôn nằm trên cùng */
-  text-align: center;
+  color: hsl(351, 88%, 68%);
+  font-size: 2.5rem;
+  text-shadow: 0 0 10px rgba(255, 105, 180, 0.8), 0 0 20px rgba(255, 105, 180, 0.6);
+  z-index: 10;
+  pointer-events: none;
   white-space: nowrap;
 }
-
 
 @media (max-width: 600px) {
   .overlay-text {
     font-size: 1.8rem;
+  }
+
+  .heart {
+    width: 60px;
+    height: 54px;
+  }
+
+  .heart::before,
+  .heart::after {
+    width: 60px;
+    height: 54px;
+  }
+
+  .heart::after {
+    left: 30px;
+  }
+
+  .heart::before {
+    top: -30px;
   }
 }

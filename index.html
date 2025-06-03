@@ -1,110 +1,13 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>formybzkn</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="overlay-text">luv you so much</div>
-  <canvas id="heartCanvas"></canvas>
-
-  <script>
-    // ========= JavaScript: ==========
-
-    const canvas = document.getElementById("heartCanvas");
-    const ctx    = canvas.getContext("2d");
-
-    function resizeCanvas() {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", () => {
-      resizeCanvas();
-      initParticles(); // khi đổi kích thước màn hình, khởi tạo lại điểm target
-    });
-    resizeCanvas();
-
-    function heartPoint(t) {
-      const x = 16 * Math.pow(Math.sin(t), 3);
-      const y = 13 * Math.cos(t)
-                - 5  * Math.cos(2 * t)
-                - 2  * Math.cos(3 * t)
-                -     Math.cos(4 * t);
-      return { x, y };
-    }
-
-    class Particle {
-      constructor(tx, ty) {
-        this.x  = canvas.width * 0.5 + (Math.random() - 0.5) * 200;
-        this.y  = canvas.height * 0.9 + (Math.random() - 0.5) * 100;
-        this.tx = tx;
-        this.ty = ty;
-        this.vx = (Math.random() - 0.5) * 2;
-        this.vy = -Math.random() * 2 - 1;
-        this.alpha = 0;                         // độ mờ (để fade-in)
-        this.size  = Math.random() * 1.5 + 0.5; // kích thước ngẫu nhiên
-        this.color = "rgba(255,182,193,";
-      }
-      update() {
-        // Tính vector hướng đến target
-        const dx = this.tx - this.x;
-        const dy = this.ty - this.y;
-        // Áp lực kéo về phía target (force proportional to khoảng cách)
-        this.vx += dx * 0.002;
-        this.vy += dy * 0.002;
-        // Tỉ lệ giảm vận tốc để tạo cảm giác “ma sát” (damping)
-        this.vx *= 0.96;
-        this.vy *= 0.96;
-        // Cập nhật vị trí
-        this.x += this.vx;
-        this.y += this.vy;
-        // Tăng dần alpha để particles fade-in
-        if (this.alpha < 1) this.alpha += 0.01;
-      }
-      draw(ctx) {
-        ctx.beginPath();
-        ctx.fillStyle = this.color + this.alpha + ")";
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    let particles = [];
-    function initParticles() {
-      particles = [];
-      const numPoints = 1200; // Số “điểm” trên đường cong trái tim
-      for (let i = 0; i < numPoints; i++) {
-        const t = (i / numPoints) * Math.PI * 2;
-        const p = heartPoint(t);
-        // Tỉ lệ scale để hình trái tim đủ lớn trong màn hình
-        const scale = Math.min(canvas.width, canvas.height) / 50;
-        const targetX = canvas.width  / 2 + p.x * scale;
-        const targetY = canvas.height / 2 - p.y * scale;
-        particles.push(new Particle(targetX, targetY));
-      }
-    }
-
-    initParticles();
-
-    function animate() {
-      // Vẽ một lớp semi‐transparent màu đen lên toàn canvas 
-      // để tạo hiệu ứng “vết mờ đằng sau” (motion trail)
-      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Cập nhật và vẽ mỗi particle
-      for (let p of particles) {
-        p.update();
-        p.draw(ctx);
-      }
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-    // ========================================================================
-  </script>
+  <div class="container">
+    <div class="heart"></div>
+    <div class="overlay-text">luv you so much</div>
+  </div>
 </body>
 </html>
