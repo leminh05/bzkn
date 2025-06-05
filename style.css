@@ -103,25 +103,8 @@ html, body {
   }
 }
 
-/* Responsive for smaller screens */
-@media (max-width: 600px) {
-  .overlay-text {
-    font-size: 1.8rem;
-  }
-
-  .heart, .heart::before, .heart::after {
-    width: 60px;
-    height: 60px;
-  }
-
-  .heart::before {
-    top: -30px;
-  }
-
-  .heart::after {
-    left: -30px;
-  }
-  .signature-text {
+/* Signature text in bottom right */
+.signature-text {
   position: absolute;
   bottom: 10px;
   right: 15px;
@@ -144,4 +127,28 @@ html, body {
   }
 }
 
+/* Responsive for smaller screens */
+@media (max-width: 600px) {
+  .overlay-text {
+    font-size: 1.8rem;
+  }
+
+  .heart, .heart::before, .heart::after {
+    width: 60px;
+    height: 60px;
+  }
+
+  .heart::before {
+    top: -30px;
+  }
+
+  .heart::after {
+    left: -30px;
+  }
+
+  .signature-text {
+    font-size: 0.75rem;
+    bottom: 8px;
+    right: 10px;
+  }
 }
